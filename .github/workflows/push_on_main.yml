@@ -3,9 +3,9 @@ name: CI
 on:
   # Run on pushes or pull‑requests targeting the main branch only
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
   # Allow manual triggering from the Actions tab
   workflow_dispatch:
 
