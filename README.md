@@ -1,9 +1,9 @@
 <!-- PROJECT SUMMARY -->
 <div align="center">
-  <h1 align="center">quillstack</h1>
+  <h1 align="center">QuillStack</h1>
 
   <p align="center">
-    An interactive Streamlit RAG chatbot for uploading and querying multiple PDFs.
+    An interactive Streamlit RAG chatbot for uploading and querying PDFs
     <br>
     <a href="https://github.com/KnowPlay/quillstack/issues">» submit a suggestion </a>
     ·
@@ -49,25 +49,25 @@
 
 ## 🌻 About
 
+QuillStack is a Streamlit-based application enabling you to upload, index, and conversationally query multiple PDF documents using Retrieval-Augmented Generation (RAG). It combines LangChain, FAISS, and OpenAI/Anthropic LLMs to let you chat with your PDFs.
+
 ### 🔧 Tech Stack
 
 #### ➕ Development Tools
 
-- [ ] Python 3.9+
-- [ ] VS Code (Python extension)
-- [ ] Git & GitHub
+- [x] Python 3.9+
 
 #### ➕ Backend
 
-- [ ] LangChain for RAG workflows
-- [ ] PyPDF2 for PDF parsing
-- [ ] spaCy (`en_core_web_sm`) for embeddings
-- [ ] FAISS for vector similarity search
-- [ ] OpenAI / Anthropic Python SDKs
+- [x] LangChain for RAG workflows
+- [x] PyPDF2 for PDF parsing
+- [x] spaCy (`en_core_web_sm`) for embeddings
+- [x] FAISS for vector similarity search
+- [x] OpenAI / Anthropic Python SDKs
 
 #### ➕ Frontend
 
-- [ ] Streamlit for interactive UI
+- [x] Streamlit for interactive UI
 
 #### ➕ DevOps
 
@@ -92,24 +92,44 @@
 
 <!-- CONTENT -->
 
-## :cactus: Documentation
+## 🌵 Documentation
 
-### :honey_pot: Setup
+### 🍯 Setup
 
-<!-- Add setup instructions here -->
+- [x] **Clone the repository**
+  ```bash
+  git clone quillstack.git
+  cd quillstack
+  ```
+- [x] **Create & activate a virtual environment**
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  ```
+- [x] **Install dependencies**
+  ```bash
+  pip install -r requirements.txt
+  python -m spacy download en_core_web_sm
+  ```
+- [x] **Configure environment variables**  
+       Create a `.env` file:
+  ```dotenv
+  OPENAI_API_KEY=sk-...
+  ANTHROPIC_API_KEY=...  # optional
+  ```
+- [x] **Run the application**
+  ```bash
+  streamlit run app.py
+  ```
+- [x] **Open** http://localhost:8501 your browser.
 
-### :apple: Development
+### 🍎 Development
 
-<!-- Add development details here -->
-
-```
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python -m spacy download en_core_web_sm
-```
-
-
+- [ ] Add new LLM providers
+- [ ] Customize chunking parameters (`chunk_size`, `chunk_overlap`)
+- [ ] Enhance the UI (authentication, file management, highlighting)
+- [ ] Extend CI workflows in `.github/workflows`
+- [ ] Write unit tests for PDF ingestion & retrieval
 
 <!-- CONTRIBUTING -->
 

@@ -16,6 +16,7 @@ faiss_db/
 
 # Environment variables
 .env
+
 # User-specific files
 *.DS_Store
 *.history
