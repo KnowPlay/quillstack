@@ -1,38 +1,36 @@
 name: CI
 
 on:
-  # Run on pushes or pull‑requests targeting the main branch only
   push:
-    branches: [ main, dev ]
+    branches: [ main ]         # run on pushes to main only
   pull_request:
-    branches: [ main, dev ]
-  # Allow manual triggering from the Actions tab
-  workflow_dispatch:
+    branches: [ main ]         # and PRs targeting main
+  workflow_dispatch:           # allow manual runs
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # GitHub‑hosted Ubuntu runner
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3           # 1️⃣  Check out repository code
+      - uses: actions/checkout@v3         # 1️⃣  Check out code
 
-      - uses: actions/setup-python@v4       # 2️⃣  Install Python 3.9 on the runner
+      - uses: actions/setup-python@v4     # 2️⃣  Set up Python 3.9
         with:
           python-version: '3.9'
 
-      - name: Install dependencies          # 3️⃣  Create venv & install requirements
+      - name: Install dependencies        # 3️⃣  venv + pip install + spaCy model
         run: |
           python -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
-          python -m spacy download en_core_web_sm
+          pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
-      - name: Run tests                     # 4️⃣  Execute pytest test suite
+      - name: Run tests                   # 4️⃣  pytest
         run: |
           source .venv/bin/activate
           pytest
 
-      - name: Verify Streamlit installation # 5️⃣  Show Streamlit version as a sanity check
+      - name: Verify Streamlit version    # 5️⃣  sanity check
         run: |
           source .venv/bin/activate
           streamlit --version
