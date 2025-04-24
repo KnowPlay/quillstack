@@ -13,13 +13,14 @@
   </p>
 
   <div align="center">
-    ![GitHub forks](https://img.shields.io/github/forks/KnowPlay/quillstack?style=social)
-    ![GitHub stars](https://img.shields.io/github/stars/KnowPlay/quillstack?style=social)
-    [![CI](https://github.com/KnowPlay/quillstack/actions/workflows/push_on_main.yml/badge.svg)](https://github.com/KnowPlay/quillstack/actions/workflows/push_on_main.yml)
-    ![GitHub Pull Request (open)](https://img.shields.io/github/issues-pr/KnowPlay/quillstack?color=blue)
-    ![GitHub last commit](https://img.shields.io/github/last-commit/KnowPlay/quillstack?color=pink)
-    ![GitHub License](https://img.shields.io/github/license/KnowPlay/quillstack?color=green)
-    ![contributions welcome](https://img.shields.io/badge/contributions-welcome-purple.svg?style=flat)
+
+![GitHub forks](https://img.shields.io/github/forks/KnowPlay/quillstack?style=social) ![GitHub stars](https://img.shields.io/github/stars/KnowPlay/quillstack?style=social)
+
+<!-- [![CI](https://github.com/org-name/repo-name/actions/workflows/file-name.yml/badge.svg)](https://github.com/KnowPlay/org-name/repo-name/actions/workflows/file-name.yml) -->
+
+[![CI](https://github.com/KnowPlay/quillstack/actions/workflows/push_on_main.yml/badge.svg)](https://github.com/KnowPlay/quillstack/actions/workflows/push_on_main.yml)
+![GitHub Pull Request (open)](https://img.shields.io/github/issues-pr/KnowPlay/quillstack?color=blue) ![GitHub last commit](https://img.shields.io/github/last-commit/KnowPlay/quillstack?color=pink) ![GitHub License](https://img.shields.io/github/license/KnowPlay/quillstack?color=green) ![contributions welcome](https://img.shields.io/badge/contributions-welcome-purple.svg?style=flat)
+
   </div>
 </div>
 
