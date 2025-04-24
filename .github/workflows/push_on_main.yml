@@ -2,35 +2,56 @@ name: CI
 
 on:
   push:
-    branches: [ main, dev ]         # run on pushes to main, dev only
+    branches: [ main, dev ]        # run on pushes to main & dev branches
   pull_request:
-    branches: [ main, dev ]         # and PRs targeting main, dev
-  workflow_dispatch:           # allow manual runs
+    branches: [ main, dev ]        # run on PRs targeting main or dev
+  workflow_dispatch:               # allow manual trigger
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3         # 1️⃣  Check out code
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4     # 2️⃣  Set up Python 3.9
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Install dependencies        # 3️⃣  venv + pip install + spaCy model
+      # ------------------------------------------------------
+      # Cache pip wheels to speed up repeated installs
+      # ------------------------------------------------------
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # ------------------------------------------------------
+      # Install dependencies + spaCy model (wheel, no prompt)
+      # ------------------------------------------------------
+      - name: Install dependencies
         run: |
           python -m venv .venv
           source .venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
           pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
-      - name: Run tests                   # 4️⃣  pytest
+      # ------------------------------------------------------
+      # Run test suite
+      # ------------------------------------------------------
+      - name: Run pytest
         run: |
           source .venv/bin/activate
-          pytest
+          pytest -q
 
-      - name: Verify Streamlit version    # 5️⃣  sanity check
+      # ------------------------------------------------------
+      # Quick sanity check that Streamlit is installed
+      # ------------------------------------------------------
+      - name: Show Streamlit version
         run: |
           source .venv/bin/activate
           streamlit --version
