@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]         # run on pushes to main only
+    branches: [ main, dev ]         # run on pushes to main, dev only
   pull_request:
-    branches: [ main ]         # and PRs targeting main
+    branches: [ main, dev ]         # and PRs targeting main, dev
   workflow_dispatch:           # allow manual runs
 
 jobs:
