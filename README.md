@@ -1,25 +1,25 @@
 <!-- PROJECT SUMMARY -->
 <div align="center">
-  <h1 align="center">Project Title</h1>
+  <h1 align="center">quillstack</h1>
 
   <p align="center">
-    {}
+    An interactive Streamlit RAG chatbot for uploading and querying multiple PDFs.
     <br>
-    <a href="https://github.com/github_username/repo_name/issues">» submit a suggestion </a>
+    <a href="https://github.com/KnowPlay/quillstack/issues">» submit a suggestion </a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">» report a bug </a>
+    <a href="https://github.com/KnowPlay/quillstack/issues">» report a bug </a>
     ·
-    <a href="https://github.com/github_username/repo_name">» contact </a>
+    <a href="https://github.com/KnowPlay/quillstack">» contact </a>
   </p>
 
   <div align="center">
-
-![GitHub forks](https://img.shields.io/github/forks/github_username/repo-name?style=social) ![GitHub stars](https://img.shields.io/github/stars/github_username/repo-name?style=social)
-
-<!-- [![CI](https://github.com/org-name/repo-name/actions/workflows/file-name.yml/badge.svg)](https://github.com/KnowPlay/org-name/repo-name/actions/workflows/file-name.yml) -->
-[![CI](https://github.com/KnowPlay/proj-tempest/actions/workflows/push_on_main.yml/badge.svg)](https://github.com/KnowPlay/proj-tempest/actions/workflows/push_on_main.yml)
-![GitHub Pull Request (open)](https://img.shields.io/github/issues-pr/github_username/repo-name?color=blue) ![GitHub last commit](https://img.shields.io/github/last-commit/github_username/repo-name?color=pink) ![GitHub License](https://img.shields.io/github/license/github_username/repo-name?color=green) ![contributions welcome](https://img.shields.io/badge/contributions-welcome-purple.svg?style=flat)
-
+    ![GitHub forks](https://img.shields.io/github/forks/KnowPlay/quillstack?style=social)
+    ![GitHub stars](https://img.shields.io/github/stars/KnowPlay/quillstack?style=social)
+    [![CI](https://github.com/KnowPlay/quillstack/actions/workflows/push_on_main.yml/badge.svg)](https://github.com/KnowPlay/quillstack/actions/workflows/push_on_main.yml)
+    ![GitHub Pull Request (open)](https://img.shields.io/github/issues-pr/KnowPlay/quillstack?color=blue)
+    ![GitHub last commit](https://img.shields.io/github/last-commit/KnowPlay/quillstack?color=pink)
+    ![GitHub License](https://img.shields.io/github/license/KnowPlay/quillstack?color=green)
+    ![contributions welcome](https://img.shields.io/badge/contributions-welcome-purple.svg?style=flat)
   </div>
 </div>
 
@@ -46,37 +46,43 @@
   </ol>
 </details>
 
-<!-- ABOUT -->
-## :sunflower: About
-<!-- Add your project description here -->
+## 🌻 About
 
-### :hammer_and_wrench: Tech Stack
 
-#### :heavy_plus_sign: Development Tools
+### 🔧 Tech Stack
 
-- [ ] 
+#### ➕ Development Tools
+- [ ] Python 3.9+
+- [ ] VS Code (Python extension)
+- [ ] Git & GitHub
 
-#### :heavy_plus_sign: Backend
+#### ➕ Backend
+- [ ] LangChain for RAG workflows
+- [ ] PyPDF2 for PDF parsing
+- [ ] spaCy (`en_core_web_sm`) for embeddings
+- [ ] FAISS for vector similarity search
+- [ ] OpenAI / Anthropic Python SDKs
 
-- [ ] 
+#### ➕ Frontend
+- [ ] Streamlit for interactive UI
 
-#### :heavy_plus_sign: Frontend
+#### ➕ DevOps
+- [ ] GitHub Actions (CI via `push_on_main.yml`)
+- [ ] Deployment (Streamlit Cloud / Heroku)
 
-- [ ] 
+### 🍄 Features
 
-#### :heavy_plus_sign: DevOps
+#### ➕ Multi-PDF Upload & Indexing
+- [ ] Upload multiple PDF files
+- [ ] Extract and concatenate text from pages
+- [ ] Split text into chunks
+- [ ] Persist a local FAISS vector index
 
-- [ ] 
-
-### :mushroom: Features
-
-#### :heavy_plus_sign: 
-
-- [ ]
-
-#### :heavy_plus_sign: 
-
-- [ ] 
+#### ➕ Conversational Chat
+- [ ] Enter free-form questions
+- [ ] Retrieve relevant context via vector search
+- [ ] Generate answers with LLMs
+- [ ] Fallback: “answer is not available in the context”
 
 <!-- CONTENT -->
 ## :cactus: Documentation
