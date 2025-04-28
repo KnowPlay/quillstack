@@ -3,11 +3,9 @@ name: CI
 
 on:
   push:
-    branches:
-      - dev
+    branches: [ main, dev ]
   pull_request:
-    branches:
-      - dev
+    branches: [ main, dev ]
   workflow_dispatch:
 
 jobs:
@@ -18,12 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Python 3.9
+      - name: Setup Python 3.8
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.8'
 
-      - name: Cache pip downloads
+      - name: Cache pip
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
@@ -31,23 +29,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Build wheelhouse
-        run: |
-          python -m pip install --upgrade pip
-          mkdir -p wheelhouse
-          pip download -r requirements.txt -d wheelhouse
-          pip download pytest -d wheelhouse
-          pip download \
-            https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl \
-            -d wheelhouse
-
-      - name: Install from wheelhouse
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          python -m pip install --no-index --find-links=wheelhouse \
-            -r requirements.txt pytest
-          python -m pip install \
-            wheelhouse/en_core_web_sm-3.7.1-py3-none-any.whl
+          # pre-install a binary wheel for blis so spaCy doesn't pull in a tar.gz
+          pip install blis==0.7.9
+          # now install everything else, forcing wheels when available
+          pip install --prefer-binary -r requirements.txt
+          # finally pull in the spaCy model
+          pip install \
+            https://github.com/explosion/spacy-models/releases/download/\en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
       - name: Run tests
         run: python -m pytest -q
