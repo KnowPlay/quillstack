@@ -1,37 +1,62 @@
-# This is a basic workflow to help you get started with Actions
-
+# .github/workflows/ci.yml
 name: CI
 
-on: # Specifies the GitHub events that trigger the workflow
-  # Triggers the workflow on push or pull request events but only for the $default-branch branch
+on:
   push:
     branches:
-      - main
-  # pull_request: # Trigger the workflow on pull request events
-  #   branches:
-  #     - main
-
-  # Allows you to run this workflow manually from the Actions tab
+      - main, dev
+  pull_request:
+    branches:
+      - main, dev
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  test:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          python -m pip install --upgrade pip setuptools wheel
+
+          # 1) Make pytest available
+          pip install pytest
+
+          # 2) Preload a binary wheel for blis (avoids any source build)
+          pip install blis==0.7.9
+
+          # 3) Install the rest, preferring wheels
+          pip install --prefer-binary -r requirements.txt
+
+          # 4) Finally, pull in the spaCy model wheel
+          pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+
+      - name: Run tests
+        shell: bash
+        run: |
+          # allow “no tests collected” (exit 5) without failing the job
+          set +e
+          python -m pytest -q
+          status=$?
+          if [ $status -ne 0 ] && [ $status -ne 5 ]; then
+            exit $status
+          fi
+
+      - name: Show Streamlit version
+        run: streamlit --version
