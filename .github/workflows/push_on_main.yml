@@ -37,9 +37,7 @@ jobs:
           pip install pytest
           pip install blis==0.7.9
           pip install --prefer-binary -r requirements.txt
-          pip install \
-            https://github.com/explosion/spacy-models/releases/download/\
-en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+          pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
       - name: Run tests
         run: python -m pytest -q
