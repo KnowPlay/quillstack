@@ -1,61 +1,43 @@
+# .github/workflows/ci.yml
 name: CI
 
 on:
   push:
-    branches: [ main, dev ]        # run on pushes to main & dev branches
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main, dev ]        # run on PRs targeting main or dev
-  workflow_dispatch:               # allow manual trigger
+    branches: [ main, dev ]
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      - name: Setup Python 3.9
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      # ------------------------------------------------------
-      # Cache pip wheels to speed up repeated installs
-      # ------------------------------------------------------
       - name: Cache pip
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      # ------------------------------------------------------
-      # Install dependencies + spaCy model (wheel, no prompt)
-      # ------------------------------------------------------
       - name: Install dependencies
         run: |
-          python -m venv .venv
-          . .venv/bin/activate           # activate the venv in a POSIX shell
-          pip install --upgrade pip
-          pip install pytest             # make sure pytest is in your venv
-          pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade pip setuptools wheel
           pip install --prefer-binary -r requirements.txt
           pip install \
             https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
+      - name: Run tests
+        run: python -m pytest -q
 
-      # ------------------------------------------------------
-      # Run test suite
-      # ------------------------------------------------------
-      - name: Run pytest
-        run: |
-          source .venv/bin/activate
-          python -m pytest -q           # invoke pytest via python to avoid PATH issues
-
-      # ------------------------------------------------------
-      # Quick sanity check that Streamlit is installed
-      # ------------------------------------------------------
       - name: Show Streamlit version
-        run: |
-          source .venv/bin/activate
-          streamlit --version
+        run: streamlit --version
