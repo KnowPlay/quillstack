@@ -35,10 +35,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m venv .venv
-          source .venv/bin/activate
+          . .venv/bin/activate           # activate the venv in a POSIX shell
           pip install --upgrade pip
+          pip install pytest             # make sure pytest is in your venv
           pip install -r requirements.txt
-          pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+          pip install \
+            https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+
 
       # ------------------------------------------------------
       # Run test suite
@@ -46,7 +49,7 @@ jobs:
       - name: Run pytest
         run: |
           source .venv/bin/activate
-          pytest -q
+          python -m pytest -q           # invoke pytest via python to avoid PATH issues
 
       # ------------------------------------------------------
       # Quick sanity check that Streamlit is installed
