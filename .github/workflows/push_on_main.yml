@@ -3,9 +3,11 @@ name: CI
 
 on:
   push:
-    branches: [ main, dev ]
+    branches:
+      - dev
   pull_request:
-    branches: [ main, dev ]
+    branches:
+      - dev
   workflow_dispatch:
 
 jobs:
@@ -33,19 +35,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           mkdir -p wheelhouse
-          # download your project deps
           pip download -r requirements.txt -d wheelhouse
-          # download pytest wheel
           pip download pytest -d wheelhouse
-          # download spaCy model wheel
           pip download \
             https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl \
             -d wheelhouse
 
-      - name: Install dependencies from wheelhouse
+      - name: Install from wheelhouse
         run: |
+          python -m pip install --upgrade pip setuptools wheel
           python -m pip install --no-index --find-links=wheelhouse \
-            -r requirements.txt pytest en_core_web_sm-3.7.1-py3-none-any.whl
+            -r requirements.txt pytest
+          python -m pip install \
+            wheelhouse/en_core_web_sm-3.7.1-py3-none-any.whl
 
       - name: Run tests
         run: python -m pytest -q
